@@ -21,6 +21,9 @@ public class Product implements Serializable {
     private float priceInPounds;
     private boolean offerApplied;
 
+    public Product() {
+    }
+
     public Product(String name, float priceInPounds, boolean offerApplied) {
         this.name = name;
         this.priceInPounds = priceInPounds;

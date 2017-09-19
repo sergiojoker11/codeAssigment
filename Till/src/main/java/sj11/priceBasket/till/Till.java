@@ -20,7 +20,7 @@ public class Till {
     public void charge(String[] shoppingItems) {
         Product product = new Product("Apple", 1.4f, false);
         Product productSaved = productProvider.save(product);
-        System.out.println("******" +productSaved);
+        System.out.println("******" + productSaved);
         List<Product> allProducts = productProvider.getAllProducts();
         System.out.println(allProducts.get(0));
         //validate input (name -> Product)
@@ -33,13 +33,10 @@ public class Till {
     }
 
     private void getProductProviderFromContext() {
-        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext()) {
-			ctx.scan(CONFIG_PACKAGE);
-			ctx.refresh();
-			productProvider = ctx.getBean(ProductProvider.class);
-            Product product = new Product("Peach", 1.2f, false);
-            productProvider.save(product);
-		}
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        ctx.scan(CONFIG_PACKAGE);
+        ctx.refresh();
+        productProvider = ctx.getBean(ProductProvider.class);
     }
 
     public Printer getPrinter() {

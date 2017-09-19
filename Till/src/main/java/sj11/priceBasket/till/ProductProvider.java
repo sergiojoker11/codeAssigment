@@ -10,7 +10,7 @@ public class ProductProvider {
     @Autowired
     ProductRepository productRepository;
 
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
