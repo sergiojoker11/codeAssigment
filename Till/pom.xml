@@ -12,6 +12,8 @@
         <spring.version>4.3.11.RELEASE</spring.version>
         <spring.datajpa.version>1.11.7.RELEASE</spring.datajpa.version>
         <hibernate.version>5.2.11.Final</hibernate.version>
+        <hsqldb.version>2.4.0</hsqldb.version>
+        <junit.version>4.12</junit.version>
     </properties>
     <build>
         <plugins>
@@ -101,13 +103,13 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>2.4.0</version>
+            <version>${hsqldb.version}</version>
         </dependency>
         <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
