@@ -38,49 +38,49 @@ import sj11.priceBasket.till.ProductProvider;
 public class PersistenceConfiguration {
 
     @Bean
-	public DataSource dataSource() {
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL)
-				.addScript("classpath:sql/productsList.sql")
-//				.addScript("classpath:sql/discountsList.sql")
-				.build();
-	}
+    public DataSource dataSource() {
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL)
+                .addScript("classpath:sql/productsList.sql")
+                //				.addScript("classpath:sql/discountsList.sql")
+                .build();
+    }
 
-	@Bean
-	public PlatformTransactionManager transactionManager() {
+    @Bean
+    public PlatformTransactionManager transactionManager() {
 
-		JpaTransactionManager txManager = new JpaTransactionManager();
-		txManager.setEntityManagerFactory(entityManagerFactory());
-		return txManager;
-	}
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory());
+        return txManager;
+    }
 
-	@Bean
-	public HibernateExceptionTranslator hibernateExceptionTranslator() {
-		return new HibernateExceptionTranslator();
-	}
+    @Bean
+    public HibernateExceptionTranslator hibernateExceptionTranslator() {
+        return new HibernateExceptionTranslator();
+    }
 
-	@Bean
-	public EntityManagerFactory entityManagerFactory() {
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
 
-		// will set the provider to 'org.hibernate.ejb.HibernatePersistence'
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		// will set hibernate.show_sql to 'true'
-		vendorAdapter.setShowSql(true);
-		// if set to true, will set hibernate.hbm2ddl.auto to 'update'
-		vendorAdapter.setGenerateDdl(false);
+        // will set the provider to 'org.hibernate.ejb.HibernatePersistence'
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        // will set hibernate.show_sql to 'true'
+        vendorAdapter.setShowSql(true);
+        // if set to true, will set hibernate.hbm2ddl.auto to 'update'
+        vendorAdapter.setGenerateDdl(false);
 
-		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("sj11.priceBasket.entities");
-		factory.setDataSource(dataSource());
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("sj11.priceBasket.entities");
+        factory.setDataSource(dataSource());
 
-		// This will trigger the creation of the entity manager factory
-		factory.afterPropertiesSet();
+        // This will trigger the creation of the entity manager factory
+        factory.afterPropertiesSet();
 
-		return factory.getObject();
-	}
+        return factory.getObject();
+    }
 
-	@Bean
-	public ProductProvider productProvider() {
-		return new ProductProvider();
-	}
+    @Bean
+    public ProductProvider productProvider() {
+        return new ProductProvider();
+    }
 }
