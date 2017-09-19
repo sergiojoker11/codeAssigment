@@ -5,3 +5,9 @@ create table products (
     offerApplied bit,
     primary key (id),
     unique (name));
+
+
+INSERT INTO products(id, name, priceInPounds, offerApplied) VALUES(1, 'Soup', 0.65, 0);
+INSERT INTO products(id, name, priceInPounds, offerApplied) VALUES(2, 'Bread', 0.80, 0);
+INSERT INTO products(id, name, priceInPounds, offerApplied) VALUES(3, 'Milk', 1.30, 0);
+INSERT INTO products(id, name, priceInPounds, offerApplied) VALUES(4, 'Apples', 1, 0);

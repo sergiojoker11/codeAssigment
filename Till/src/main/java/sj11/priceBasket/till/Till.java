@@ -1,6 +1,5 @@
 package sj11.priceBasket.till;
 
-import java.util.List;
 import java.util.Objects;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import sj11.priceBasket.entities.Product;
@@ -14,25 +13,38 @@ public class Till {
 
     public Till() {
         this.printer = new Printer();
-        getProductProviderFromContext();
+        getProductProviderFromSpringContext();
     }
 
     public void charge(String[] shoppingItems) {
-        Product product = new Product("Apple", 1.4f, false);
-        Product productSaved = productProvider.save(product);
-        System.out.println("******" + productSaved);
-        List<Product> allProducts = productProvider.getAllProducts();
-        System.out.println(allProducts.get(0));
-        //validate input (name -> Product)
-        //Scan all items
-        //Apply discounts
-        //Print
+        Ticket ticket = validate(shoppingItems);
+        scan(ticket);
+        applyDiscounts(ticket);
+        printer.print(ticket);
+    }
+
+    private Ticket validate(String[] shoppingItems) {
+        Ticket ticket = new Ticket();
+        for (String item : shoppingItems) {
+            ticket.getShoppingList().add(validate(item));
+        }
+        return ticket;
+    }
+
+    private Product validate(String productName) {
+        return productProvider.validate(productName);
+    }
+
+    private void scan(Ticket ticket) {
+        ticket.getShoppingList().forEach(product -> {
+            ticket.addToSubtotal(product.getPriceInPounds());
+        });
     }
 
     private void applyDiscounts(Ticket ticket) {
     }
 
-    private void getProductProviderFromContext() {
+    private void getProductProviderFromSpringContext() {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.scan(CONFIG_PACKAGE);
         ctx.refresh();

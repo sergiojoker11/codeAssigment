@@ -15,15 +15,12 @@
  * Copyright 2017 © Costain Ltd.
  * All Rights Reserved.
  */
-
 package sj11.priceBasket.repositories;
 
-import java.util.List;
 import org.springframework.data.repository.Repository;
 import sj11.priceBasket.entities.Product;
 
 public interface ProductRepository extends Repository<Product, Long> {
 
-    List<Product> findAll();
-    Product save(Product product);
+    Product findByName(String name);
 }

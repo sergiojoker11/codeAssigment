@@ -1,5 +1,6 @@
 package sj11.priceBasket.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,6 +10,15 @@ public class Ticket {
     private float subtotalInPounds;
     private List<Discount> discountsApplied;
     private float totalInPounds;
+
+    public Ticket() {
+        shoppingList = new ArrayList<>();
+        discountsApplied = new ArrayList<>();
+    }
+
+    public void addToSubtotal(float productoPrice) {
+        subtotalInPounds += productoPrice;
+    }
 
     public List<Product> getShoppingList() {
         return shoppingList;
