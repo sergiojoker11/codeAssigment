@@ -1,9 +1,22 @@
 package sj11.priceBasket.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Product {
+@Table(name = "products")
+@Entity
+public class Product implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private float priceInPounds;
     private boolean offerApplied;
@@ -12,6 +25,14 @@ public class Product {
         this.name = name;
         this.priceInPounds = priceInPounds;
         this.offerApplied = offerApplied;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -40,10 +61,11 @@ public class Product {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.name);
-        hash = 89 * hash + Float.floatToIntBits(this.priceInPounds);
-        hash = 89 * hash + (this.offerApplied ? 1 : 0);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Float.floatToIntBits(this.priceInPounds);
+        hash = 97 * hash + (this.offerApplied ? 1 : 0);
         return hash;
     }
 
@@ -68,11 +90,14 @@ public class Product {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Product{" + "name=" + name + ", priceInPounds=" + priceInPounds + ", offerApplied=" + offerApplied + '}';
+        return "Product{" + "id=" + id + ", name=" + name + ", priceInPounds=" + priceInPounds + ", offerApplied=" + offerApplied + '}';
     }
 }

@@ -1,19 +1,28 @@
 package sj11.priceBasket.till;
 
+import java.util.List;
 import java.util.Objects;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
 
 public class Till {
 
     private Printer printer;
     private ProductProvider productProvider;
+    private static final String CONFIG_PACKAGE = "sj11.priceBasket.config";
 
     public Till() {
         this.printer = new Printer();
-        this.productProvider = new ProductProvider();
+        getProductProviderFromContext();
     }
 
     public void charge(String[] shoppingItems) {
+        Product product = new Product("Apple", 1.4f, false);
+        Product productSaved = productProvider.save(product);
+        System.out.println("******" +productSaved);
+        List<Product> allProducts = productProvider.getAllProducts();
+        System.out.println(allProducts.get(0));
         //validate input (name -> Product)
         //Scan all items
         //Apply discounts
@@ -21,6 +30,16 @@ public class Till {
     }
 
     private void applyDiscounts(Ticket ticket) {
+    }
+
+    private void getProductProviderFromContext() {
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext()) {
+			ctx.scan(CONFIG_PACKAGE);
+			ctx.refresh();
+			productProvider = ctx.getBean(ProductProvider.class);
+            Product product = new Product("Peach", 1.2f, false);
+            productProvider.save(product);
+		}
     }
 
     public Printer getPrinter() {
