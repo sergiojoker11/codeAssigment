@@ -1,8 +1,8 @@
 package sj11.priceBasket.entities;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Discount implements Serializable {
+public class DiscountApplied implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,13 +19,13 @@ public class Discount implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ElementCollection
-    private Map<DiscountToApply, DiscountApplied> discount = new HashMap();
+    private List<Product> productsWithDiscountApplied = new ArrayList<>();
 
-    public Discount() {
+    public DiscountApplied() {
     }
 
-    public Discount(DiscountToApply discountToApply, DiscountApplied discountApplied) {
-        discount.put(discountToApply, discountApplied);
+    public DiscountApplied(List<Product> productsWithDiscountApplied) {
+        this.productsWithDiscountApplied = productsWithDiscountApplied;
     }
 
     public Long getId() {
@@ -36,19 +36,19 @@ public class Discount implements Serializable {
         this.id = id;
     }
 
-    public Map<DiscountToApply, DiscountApplied> getDiscount() {
-        return discount;
+    public List<Product> getProductsWithDiscountApplied() {
+        return productsWithDiscountApplied;
     }
 
-    public void setDiscount(Map<DiscountToApply, DiscountApplied> discount) {
-        this.discount = discount;
+    public void setProductsWithDiscountApplied(List<Product> productsWithDiscountApplied) {
+        this.productsWithDiscountApplied = productsWithDiscountApplied;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.discount);
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.productsWithDiscountApplied);
         return hash;
     }
 
@@ -63,18 +63,15 @@ public class Discount implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Discount other = (Discount) obj;
+        final DiscountApplied other = (DiscountApplied) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.discount, other.discount)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.productsWithDiscountApplied, other.productsWithDiscountApplied);
     }
 
     @Override
     public String toString() {
-        return "Discount{" + "discount=" + discount + '}';
+        return "DiscountApplied{" + "id=" + id + ", productsWithDiscountApplied=" + productsWithDiscountApplied + '}';
     }
 }

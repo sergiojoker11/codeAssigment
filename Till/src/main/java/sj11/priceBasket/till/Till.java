@@ -1,7 +1,11 @@
 package sj11.priceBasket.till;
 
+import java.util.Arrays;
 import java.util.Objects;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import sj11.priceBasket.entities.Discount;
+import sj11.priceBasket.entities.DiscountApplied;
+import sj11.priceBasket.entities.DiscountToApply;
 import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
 
@@ -9,11 +13,19 @@ public class Till {
 
     private Printer printer;
     private ProductProvider productProvider;
+    private DiscountProvider discountProvider;
     private static final String CONFIG_PACKAGE = "sj11.priceBasket.config";
 
     public Till() {
         this.printer = new Printer();
         getProductProviderFromSpringContext();
+        Product x1 = new Product("X1", 1.2f, false);
+        Product x2 = new Product("X2", 1.4f, false);
+        DiscountToApply key = new DiscountToApply(Arrays.asList(x1));
+        DiscountApplied value = new DiscountApplied(Arrays.asList(x2));
+        Discount discount = new Discount(key, value);
+        Discount save = discountProvider.save(discount);
+        System.out.println(save.toString());
     }
 
     public void charge(String[] shoppingItems) {
@@ -49,6 +61,7 @@ public class Till {
         ctx.scan(CONFIG_PACKAGE);
         ctx.refresh();
         productProvider = ctx.getBean(ProductProvider.class);
+        discountProvider = ctx.getBean(DiscountProvider.class);
     }
 
     public Printer getPrinter() {
