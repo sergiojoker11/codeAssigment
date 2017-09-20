@@ -4,7 +4,7 @@ import sj11.priceBasket.services.ProductService;
 import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
 
-public class Scanner extends AbstractBeanGetter {
+public class Scanner {
 
     private final ProductService productService;
 

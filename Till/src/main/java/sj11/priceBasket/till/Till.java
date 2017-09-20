@@ -1,20 +1,24 @@
 package sj11.priceBasket.till;
 
 import java.util.Objects;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import sj11.priceBasket.entities.Ticket;
 import sj11.priceBasket.services.DiscountService;
 import sj11.priceBasket.services.ProductService;
 
-public class Till extends AbstractBeanGetter {
+public class Till {
 
     private final Printer printer;
     private final Scanner scanner;
     private final DiscountApplier discountApplier;
+    private static final String CONFIG_PACKAGE = "sj11.priceBasket.config";
+    private AnnotationConfigApplicationContext context;
 
     public Till() {
-        this.scanner = new Scanner((ProductService) getBean(ProductService.class));
+        createSpringContext();
+        this.scanner = new Scanner((ProductService) context.getBean(ProductService.class));
+        this.discountApplier = new DiscountApplier((DiscountService) context.getBean(DiscountService.class));
         this.printer = new Printer();
-        this.discountApplier = new DiscountApplier((DiscountService) getBean(DiscountService.class));
 //        Product x1 = new Product("X1", 1.2f, false);
 //        Product x2 = new Product("X2", 1.4f, false);
 //        DiscountToApply key = new DiscountToApply(Arrays.asList(x1));
@@ -29,6 +33,12 @@ public class Till extends AbstractBeanGetter {
         scanner.scan(ticket);
 //        discountApplier.applyDiscounts(ticket);
         printer.print(ticket);
+    }
+
+    private void createSpringContext() {
+        context = new AnnotationConfigApplicationContext();
+        context.scan(CONFIG_PACKAGE);
+        context.refresh();
     }
 
     @Override
