@@ -19,19 +19,12 @@ public class Till {
         this.scanner = new Scanner((ProductService) context.getBean(ProductService.class));
         this.discountApplier = new DiscountApplier((DiscountService) context.getBean(DiscountService.class));
         this.printer = new Printer();
-//        Product x1 = new Product("X1", 1.2f, false);
-//        Product x2 = new Product("X2", 1.4f, false);
-//        DiscountToApply key = new DiscountToApply(Arrays.asList(x1));
-//        DiscountApplied value = new DiscountApplied(Arrays.asList(x2));
-//        Discount discount = new Discount(key, value);
-//        Discount save = discountProvider.save(discount);
-//        System.out.println(save.toString());
     }
 
     public void charge(String[] shoppingItems) {
         Ticket ticket = scanner.validate(shoppingItems);
         scanner.scan(ticket);
-//        discountApplier.applyDiscounts(ticket);
+        discountApplier.applyDiscounts(ticket);
         printer.print(ticket);
     }
 

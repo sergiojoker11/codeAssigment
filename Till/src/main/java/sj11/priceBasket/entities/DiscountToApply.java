@@ -1,16 +1,13 @@
 package sj11.priceBasket.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class DiscountToApply implements Serializable {
@@ -20,16 +17,29 @@ public class DiscountToApply implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ElementCollection
-    private List<Product> productsToApplyDiscount = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Product productId1;
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Product productId2;
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Product productId3;
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Product productId4;
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Product productId5;
 
-    public DiscountToApply() {
-    }
-
-    public DiscountToApply(List<Product> productsToApplyDiscount) {
-        this.productsToApplyDiscount = productsToApplyDiscount;
-    }
-
+    //    return listEqualsNoOrder(this.productsToApplyDiscount, other.productsToApplyDiscount);
+//    public static <T> boolean listEqualsNoOrder(List<T> l1, List<T> l2) {
+//        final Set<T> s1 = new HashSet<>(l1);
+//        final Set<T> s2 = new HashSet<>(l2);
+//
+//        return s1.equals(s2);
+//    }
     public Long getId() {
         return id;
     }
@@ -38,18 +48,55 @@ public class DiscountToApply implements Serializable {
         this.id = id;
     }
 
-    public List<Product> getProductsToApplyDiscount() {
-        return productsToApplyDiscount;
+    public Product getProductId1() {
+        return productId1;
     }
 
-    public void setProductsToApplyDiscount(List<Product> productsToApplyDiscount) {
-        this.productsToApplyDiscount = productsToApplyDiscount;
+    public void setProductId1(Product productId1) {
+        this.productId1 = productId1;
+    }
+
+    public Product getProductId2() {
+        return productId2;
+    }
+
+    public void setProductId2(Product productId2) {
+        this.productId2 = productId2;
+    }
+
+    public Product getProductId3() {
+        return productId3;
+    }
+
+    public void setProductId3(Product productId3) {
+        this.productId3 = productId3;
+    }
+
+    public Product getProductId4() {
+        return productId4;
+    }
+
+    public void setProductId4(Product productId4) {
+        this.productId4 = productId4;
+    }
+
+    public Product getProductId5() {
+        return productId5;
+    }
+
+    public void setProductId5(Product productId5) {
+        this.productId5 = productId5;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.productsToApplyDiscount);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.productId1);
+        hash = 29 * hash + Objects.hashCode(this.productId2);
+        hash = 29 * hash + Objects.hashCode(this.productId3);
+        hash = 29 * hash + Objects.hashCode(this.productId4);
+        hash = 29 * hash + Objects.hashCode(this.productId5);
         return hash;
     }
 
@@ -65,19 +112,29 @@ public class DiscountToApply implements Serializable {
             return false;
         }
         final DiscountToApply other = (DiscountToApply) obj;
-        return listEqualsNoOrder(this.productsToApplyDiscount, other.productsToApplyDiscount);
-    }
-
-    public static <T> boolean listEqualsNoOrder(List<T> l1, List<T> l2) {
-        final Set<T> s1 = new HashSet<>(l1);
-        final Set<T> s2 = new HashSet<>(l2);
-
-        return s1.equals(s2);
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.productId1, other.productId1)) {
+            return false;
+        }
+        if (!Objects.equals(this.productId2, other.productId2)) {
+            return false;
+        }
+        if (!Objects.equals(this.productId3, other.productId3)) {
+            return false;
+        }
+        if (!Objects.equals(this.productId4, other.productId4)) {
+            return false;
+        }
+        if (!Objects.equals(this.productId5, other.productId5)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "DiscountToApply{" + "productsToApplyDiscount=" + productsToApplyDiscount + '}';
+        return "DiscountToApply{" + "id=" + id + ", productId1=" + productId1 + ", productId2=" + productId2 + ", productId3=" + productId3 + ", productId4=" + productId4 + ", productId5=" + productId5 + '}';
     }
-
 }

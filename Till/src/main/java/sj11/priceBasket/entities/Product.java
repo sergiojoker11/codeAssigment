@@ -6,9 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Table(name = "products")
 @Entity
 public class Product implements Serializable {
 
@@ -20,14 +18,16 @@ public class Product implements Serializable {
     private String name;
     private float priceInPounds;
     private boolean offerApplied;
+    private float priceRate;
 
     public Product() {
     }
 
-    public Product(String name, float priceInPounds, boolean offerApplied) {
+    public Product(String name, float priceInPounds, boolean offerApplied, float priceRate) {
         this.name = name;
         this.priceInPounds = priceInPounds;
         this.offerApplied = offerApplied;
+        this.priceRate = priceRate;
     }
 
     public Long getId() {
@@ -62,13 +62,22 @@ public class Product implements Serializable {
         this.offerApplied = offerApplied;
     }
 
+    public float getPriceRate() {
+        return priceRate;
+    }
+
+    public void setPriceRate(float priceRate) {
+        this.priceRate = priceRate;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Float.floatToIntBits(this.priceInPounds);
-        hash = 97 * hash + (this.offerApplied ? 1 : 0);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + Float.floatToIntBits(this.priceInPounds);
+        hash = 79 * hash + (this.offerApplied ? 1 : 0);
+        hash = 79 * hash + Float.floatToIntBits(this.priceRate);
         return hash;
     }
 
@@ -90,6 +99,9 @@ public class Product implements Serializable {
         if (this.offerApplied != other.offerApplied) {
             return false;
         }
+        if (Float.floatToIntBits(this.priceRate) != Float.floatToIntBits(other.priceRate)) {
+            return false;
+        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -101,6 +113,6 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", name=" + name + ", priceInPounds=" + priceInPounds + ", offerApplied=" + offerApplied + '}';
+        return "Product{" + "id=" + id + ", name=" + name + ", priceInPounds=" + priceInPounds + ", offerApplied=" + offerApplied + ", priceRate=" + priceRate + '}';
     }
 }

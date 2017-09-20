@@ -1,5 +1,7 @@
 package sj11.priceBasket.till;
 
+import java.util.List;
+import sj11.priceBasket.entities.Discount;
 import sj11.priceBasket.entities.Ticket;
 import sj11.priceBasket.services.DiscountService;
 
@@ -12,5 +14,7 @@ public class DiscountApplier {
     }
 
     public void applyDiscounts(Ticket ticket) {
+        List<Discount> all = discountService.getAll();
+        System.out.println(all);
     }
 }
