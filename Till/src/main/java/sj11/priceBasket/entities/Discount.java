@@ -6,8 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Discount implements Serializable {
@@ -18,10 +18,10 @@ public class Discount implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name = "id")
+    @PrimaryKeyJoinColumn
     private DiscountToApply discountToApply;
     @OneToOne
-    @JoinColumn(name = "id")
+    @PrimaryKeyJoinColumn
     private DiscountApplied discountApplied;
 
 //    public Discount() {
