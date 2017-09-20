@@ -1,81 +1,42 @@
 package sj11.priceBasket.till;
 
-import java.util.Arrays;
 import java.util.Objects;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import sj11.priceBasket.entities.Discount;
-import sj11.priceBasket.entities.DiscountApplied;
-import sj11.priceBasket.entities.DiscountToApply;
-import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
+import sj11.priceBasket.services.DiscountService;
+import sj11.priceBasket.services.ProductService;
 
-public class Till {
+public class Till extends AbstractBeanGetter {
 
-    private Printer printer;
-    private ProductProvider productProvider;
-    private DiscountProvider discountProvider;
-    private static final String CONFIG_PACKAGE = "sj11.priceBasket.config";
+    private final Printer printer;
+    private final Scanner scanner;
+    private final DiscountApplier discountApplier;
 
     public Till() {
+        this.scanner = new Scanner((ProductService) getBean(ProductService.class));
         this.printer = new Printer();
-        getProductProviderFromSpringContext();
-        Product x1 = new Product("X1", 1.2f, false);
-        Product x2 = new Product("X2", 1.4f, false);
-        DiscountToApply key = new DiscountToApply(Arrays.asList(x1));
-        DiscountApplied value = new DiscountApplied(Arrays.asList(x2));
-        Discount discount = new Discount(key, value);
-        Discount save = discountProvider.save(discount);
-        System.out.println(save.toString());
+        this.discountApplier = new DiscountApplier((DiscountService) getBean(DiscountService.class));
+//        Product x1 = new Product("X1", 1.2f, false);
+//        Product x2 = new Product("X2", 1.4f, false);
+//        DiscountToApply key = new DiscountToApply(Arrays.asList(x1));
+//        DiscountApplied value = new DiscountApplied(Arrays.asList(x2));
+//        Discount discount = new Discount(key, value);
+//        Discount save = discountProvider.save(discount);
+//        System.out.println(save.toString());
     }
 
     public void charge(String[] shoppingItems) {
-        Ticket ticket = validate(shoppingItems);
-        scan(ticket);
-        applyDiscounts(ticket);
+        Ticket ticket = scanner.validate(shoppingItems);
+        scanner.scan(ticket);
+//        discountApplier.applyDiscounts(ticket);
         printer.print(ticket);
-    }
-
-    private Ticket validate(String[] shoppingItems) {
-        Ticket ticket = new Ticket();
-        for (String item : shoppingItems) {
-            ticket.getShoppingList().add(validate(item));
-        }
-        return ticket;
-    }
-
-    private Product validate(String productName) {
-        return productProvider.validate(productName);
-    }
-
-    private void scan(Ticket ticket) {
-        ticket.getShoppingList().forEach(product -> {
-            ticket.addToSubtotal(product.getPriceInPounds());
-        });
-    }
-
-    private void applyDiscounts(Ticket ticket) {
-    }
-
-    private void getProductProviderFromSpringContext() {
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.scan(CONFIG_PACKAGE);
-        ctx.refresh();
-        productProvider = ctx.getBean(ProductProvider.class);
-        discountProvider = ctx.getBean(DiscountProvider.class);
-    }
-
-    public Printer getPrinter() {
-        return printer;
-    }
-
-    public void setPrinter(Printer printer) {
-        this.printer = printer;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.printer);
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.printer);
+        hash = 29 * hash + Objects.hashCode(this.scanner);
+        hash = 29 * hash + Objects.hashCode(this.discountApplier);
         return hash;
     }
 
@@ -94,11 +55,14 @@ public class Till {
         if (!Objects.equals(this.printer, other.printer)) {
             return false;
         }
-        return true;
+        if (!Objects.equals(this.scanner, other.scanner)) {
+            return false;
+        }
+        return Objects.equals(this.discountApplier, other.discountApplier);
     }
 
     @Override
     public String toString() {
-        return "Till{" + "printer=" + printer + '}';
+        return "Till{" + "printer=" + printer + ", scanner=" + scanner + ", discountApplier=" + discountApplier + '}';
     }
 }

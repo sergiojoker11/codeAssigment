@@ -13,8 +13,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import sj11.priceBasket.till.DiscountProvider;
-import sj11.priceBasket.till.ProductProvider;
+import sj11.priceBasket.services.DiscountService;
+import sj11.priceBasket.services.ProductService;
 
 @Configuration
 @EnableJpaRepositories("sj11.priceBasket.repositories")
@@ -64,12 +64,12 @@ public class PersistenceConfiguration {
     }
 
     @Bean
-    public ProductProvider productProvider() {
-        return new ProductProvider();
+    public ProductService productProvider() {
+        return new ProductService();
     }
 
     @Bean
-    public DiscountProvider discountProvider() {
-        return new DiscountProvider();
+    public DiscountService discountProvider() {
+        return new DiscountService();
     }
 }

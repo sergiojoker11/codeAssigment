@@ -1,10 +1,10 @@
-package sj11.priceBasket.till;
+package sj11.priceBasket.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import sj11.priceBasket.entities.Discount;
 import sj11.priceBasket.repositories.DiscountRepository;
 
-public class DiscountProvider {
+public class DiscountService {
 
     @Autowired
     DiscountRepository discountRepository;
