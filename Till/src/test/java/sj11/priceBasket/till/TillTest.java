@@ -17,28 +17,29 @@
  */
 package sj11.priceBasket.till;
 
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(class =  PersistanceConfiguration.class)
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
+	DbUnitTestExecutionListener.class })
 public class TillTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     public TillTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     @Before
@@ -55,19 +56,43 @@ public class TillTest {
      * Test of charge method, of class Till.
      */
     @Test
-    public void testCharge() {
+    public void test_offer1_from_document() {
         String[] shoppingItems = {"Apples", "Milk", "Bread"};
-        Till instance = new Till();
-        instance.charge(shoppingItems);
+        Till till = new Till();
+        till.charge(shoppingItems);
 
+        assertEquals(createExpectation("£3.10", "£3.00", "10%", "10p"), outContent.toString());
+    }
+
+    @Test
+    public void test_no_offer_applied() {
+        String[] shoppingItems = {"Milk"};
+        Till till = new Till();
+        till.charge(shoppingItems);
+
+        assertEquals(createExpectation("£1.3", "£1.3"), outContent.toString());
+    }
+
+    private String createExpectation(String subtotal, String total, String ... rateOffAndDiscountedPairs) {
         StringBuilder expectation = new StringBuilder();
-        expectation.append("Subtotal: £3.10");
+        expectation.append("Subtotal: ").append(subtotal);
         expectation.append(System.lineSeparator());
-        expectation.append("Apples 10% off: -10p");
-        expectation.append(System.lineSeparator());
-        expectation.append("Total price: £3.00");
-        expectation.append(System.lineSeparator());
-        assertEquals(expectation.toString(), outContent.toString());
+        if (rateOffAndDiscountedPairs.length == 0) {
+            expectation.append("(No offers available)");
+        } else {
+            int index = 0;
+            for (String item: rateOffAndDiscountedPairs) {
+                if (index % 2 == 0) {
+                    expectation.append("Apples ").append(item);
+                } else {
+                    expectation.append(" off: -").append(item).append("");
+                    expectation.append(System.lineSeparator());
+                }
+                index++;
+            }
+        }
+        expectation.append("Total price: ").append(total);
+        return expectation.append(System.lineSeparator()).toString();
     }
 
 }
