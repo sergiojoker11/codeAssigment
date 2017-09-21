@@ -29,23 +29,23 @@ public class Printer {
     private void printDiscountApplied(DiscountApplied discountApplied) {
         Product product = discountApplied.getProductId1();
         if (product != null) {
-            System.out.println(product.getName() + ": " + discountApplied.getProductRate1() + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate1()) + "p");
+            System.out.println(product.getName() + " " + Math.round(discountApplied.getProductRate1()) + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate1()) + "p");
         }
         product = discountApplied.getProductId2();
         if (product != null) {
-            System.out.println(product.getName() + ": " + discountApplied.getProductRate2() + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate2()) + "p");
+            System.out.println(product.getName() + " " + Math.round(discountApplied.getProductRate2()) + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate2()) + "p");
         }
         product = discountApplied.getProductId3();
         if (product != null) {
-            System.out.println(product.getName() + ": " + discountApplied.getProductRate3() + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate3()) + "p");
+            System.out.println(product.getName() + " " + Math.round(discountApplied.getProductRate3()) + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate3()) + "p");
         }
         product = discountApplied.getProductId4();
         if (product != null) {
-            System.out.println(product.getName() + ": " + discountApplied.getProductRate4() + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate4()) + "p");
+            System.out.println(product.getName() + " " + Math.round(discountApplied.getProductRate4()) + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate4()) + "p");
         }
         product = discountApplied.getProductId5();
         if (product != null) {
-            System.out.println(product.getName() + ": " + discountApplied.getProductRate5() + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate5()) + "p");
+            System.out.println(product.getName() + " " + Math.round(discountApplied.getProductRate5()) + "% off: -" + Math.round(product.getPriceInPounds() * discountApplied.getProductRate5()) + "p");
         }
     }
 
