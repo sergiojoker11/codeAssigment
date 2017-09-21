@@ -21,19 +21,19 @@ public class Ticket {
         discountsApplied
                 .forEach((discountApplied) -> {
                     if (discountApplied.getProductId1() != null) {
-                        substractFromTotal(discountApplied.getProductId1().getPriceInPounds() * discountApplied.getProductRate1());
+                        substractFromTotal(discountApplied.getProductId1().getPriceInPounds() * (discountApplied.getProductRate1()/100));
                     }
                     if (discountApplied.getProductId2() != null) {
-                        substractFromTotal(discountApplied.getProductId2().getPriceInPounds() * discountApplied.getProductRate2());
+                        substractFromTotal(discountApplied.getProductId2().getPriceInPounds() * (discountApplied.getProductRate2()/100));
                     }
                     if (discountApplied.getProductId3() != null) {
-                        substractFromTotal(discountApplied.getProductId3().getPriceInPounds() * discountApplied.getProductRate3());
+                        substractFromTotal(discountApplied.getProductId3().getPriceInPounds() * (discountApplied.getProductRate3()/100));
                     }
                     if (discountApplied.getProductId4() != null) {
-                        substractFromTotal(discountApplied.getProductId4().getPriceInPounds() * discountApplied.getProductRate4());
+                        substractFromTotal(discountApplied.getProductId4().getPriceInPounds() * (discountApplied.getProductRate4()/100));
                     }
                     if (discountApplied.getProductId5() != null) {
-                        substractFromTotal(discountApplied.getProductId5().getPriceInPounds() * discountApplied.getProductRate5());
+                        substractFromTotal(discountApplied.getProductId5().getPriceInPounds() * (discountApplied.getProductRate5()/100));
                     }
                 });
     }
