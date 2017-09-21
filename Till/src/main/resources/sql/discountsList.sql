@@ -34,8 +34,5 @@ INSERT INTO Discount VALUES(1, 1, 1);
 
 -- Offer 2
 INSERT INTO DiscountToApply VALUES(2, 1, 1, NULL, NULL, NULL);
-INSERT INTO DiscountApplied VALUES(2, 1, 100, 1, 100, 2, 50, NULL, NULL, NULL, NULL);
+INSERT INTO DiscountApplied VALUES(2, 1, 0, 1, 0, 2, 50, NULL, NULL, NULL, NULL);
 INSERT INTO Discount VALUES(2, 2, 2);
-
-SELECT * FROM DiscountToApply;
-SELECT * FROM DiscountApplied;

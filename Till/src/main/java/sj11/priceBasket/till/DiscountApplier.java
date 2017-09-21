@@ -8,7 +8,7 @@ import sj11.priceBasket.services.DiscountService;
 
 public class DiscountApplier {
 
-    private DiscountService discountService;
+    private final DiscountService discountService;
     Set<Discount> discountList;
 
     public DiscountApplier(DiscountService discountService) {
@@ -21,13 +21,14 @@ public class DiscountApplier {
                 .forEach((discount) -> {
                     applyDiscount(ticket, discount);
                 });
-        ticket.processDiscounts();
+        ticket.calculateTotal();
     }
 
     private void applyDiscount(Ticket ticket, Discount discount) {
         Set<Product> productsToApply = discount.getDiscountToApply().getProducts();
         if (ticket.getShoppingList().containsAll(productsToApply)) {
-            ticket.addDiscount(discount);
+            ticket.addDiscount(discount.getDiscountApplied());
+            ticket.getShoppingList().removeAll(productsToApply);
         }
     }
 }

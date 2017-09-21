@@ -8,7 +8,7 @@ public class Ticket {
 
     private Set<Product> shoppingList;
     private float subtotalInPounds;
-    private Set<Discount> discountsApplied;
+    private Set<DiscountApplied> discountsApplied;
     private float totalInPounds;
 
     public Ticket() {
@@ -16,23 +16,38 @@ public class Ticket {
         discountsApplied = new HashSet<>();
     }
 
+    public void calculateTotal() {
+        totalInPounds = subtotalInPounds;
+        discountsApplied
+                .forEach((discountApplied) -> {
+                    if (discountApplied.getProductId1() != null) {
+                        substractFromTotal(discountApplied.getProductId1().getPriceInPounds() * discountApplied.getProductRate1());
+                    }
+                    if (discountApplied.getProductId2() != null) {
+                        substractFromTotal(discountApplied.getProductId2().getPriceInPounds() * discountApplied.getProductRate2());
+                    }
+                    if (discountApplied.getProductId3() != null) {
+                        substractFromTotal(discountApplied.getProductId3().getPriceInPounds() * discountApplied.getProductRate3());
+                    }
+                    if (discountApplied.getProductId4() != null) {
+                        substractFromTotal(discountApplied.getProductId4().getPriceInPounds() * discountApplied.getProductRate4());
+                    }
+                    if (discountApplied.getProductId5() != null) {
+                        substractFromTotal(discountApplied.getProductId5().getPriceInPounds() * discountApplied.getProductRate5());
+                    }
+                });
+    }
+
+    private void substractFromTotal(float off) {
+        totalInPounds -= off;
+    }
+
     public void addToSubtotal(float productoPrice) {
         subtotalInPounds += productoPrice;
     }
 
-    public void addDiscount(Discount discount) {
+    public void addDiscount(DiscountApplied discount) {
         discountsApplied.add(discount);
-    }
-
-    public void processDiscounts() {
-        discountsApplied
-                .forEach((discount) -> {
-                    processDiscount(discount);
-                });
-    }
-
-    private void processDiscount(Discount discount) {
-        Set<Product> products = discount.getDiscountToApply().getProducts();
     }
 
     public Set<Product> getShoppingList() {
@@ -51,11 +66,11 @@ public class Ticket {
         this.subtotalInPounds = subtotalInPounds;
     }
 
-    public Set<Discount> getDiscountsApplied() {
+    public Set<DiscountApplied> getDiscountsApplied() {
         return discountsApplied;
     }
 
-    public void setDiscountsApplied(Set<Discount> discountsApplied) {
+    public void setDiscountsApplied(Set<DiscountApplied> discountsApplied) {
         this.discountsApplied = discountsApplied;
     }
 
