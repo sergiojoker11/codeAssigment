@@ -1,6 +1,6 @@
 package sj11.priceBasket.services;
 
-import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import sj11.priceBasket.entities.Discount;
 import sj11.priceBasket.repositories.DiscountRepository;
@@ -14,7 +14,7 @@ public class DiscountService {
         return discountRepository.save(discount);
     }
 
-    public List<Discount> getAll() {
+    public Set<Discount> getAll() {
         return discountRepository.findAll();
     }
 }

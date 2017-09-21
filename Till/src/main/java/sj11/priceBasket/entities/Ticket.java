@@ -1,30 +1,45 @@
 package sj11.priceBasket.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Ticket {
 
-    private List<Product> shoppingList;
+    private Set<Product> shoppingList;
     private float subtotalInPounds;
-    private List<Discount> discountsApplied;
+    private Set<Discount> discountsApplied;
     private float totalInPounds;
 
     public Ticket() {
-        shoppingList = new ArrayList<>();
-        discountsApplied = new ArrayList<>();
+        shoppingList = new HashSet<>();
+        discountsApplied = new HashSet<>();
     }
 
     public void addToSubtotal(float productoPrice) {
         subtotalInPounds += productoPrice;
     }
 
-    public List<Product> getShoppingList() {
+    public void addDiscount(Discount discount) {
+        discountsApplied.add(discount);
+    }
+
+    public void processDiscounts() {
+        discountsApplied
+                .forEach((discount) -> {
+                    processDiscount(discount);
+                });
+    }
+
+    private void processDiscount(Discount discount) {
+        Set<Product> products = discount.getDiscountToApply().getProducts();
+    }
+
+    public Set<Product> getShoppingList() {
         return shoppingList;
     }
 
-    public void setShoppingList(List<Product> shoppingList) {
+    public void setShoppingList(Set<Product> shoppingList) {
         this.shoppingList = shoppingList;
     }
 
@@ -36,11 +51,11 @@ public class Ticket {
         this.subtotalInPounds = subtotalInPounds;
     }
 
-    public List<Discount> getDiscountsApplied() {
+    public Set<Discount> getDiscountsApplied() {
         return discountsApplied;
     }
 
-    public void setDiscountsApplied(List<Discount> discountsApplied) {
+    public void setDiscountsApplied(Set<Discount> discountsApplied) {
         this.discountsApplied = discountsApplied;
     }
 

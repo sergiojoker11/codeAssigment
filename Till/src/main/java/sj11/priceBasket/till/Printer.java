@@ -1,6 +1,6 @@
 package sj11.priceBasket.till;
 
-import java.util.List;
+import java.util.Set;
 import sj11.priceBasket.entities.Discount;
 import sj11.priceBasket.entities.Ticket;
 
@@ -16,7 +16,7 @@ public class Printer {
         System.out.println("Total price: £" + ticket.getTotalInPounds());
     }
 
-    private void printDiscountsApplied(List<Discount> discountsList) {
+    private void printDiscountsApplied(Set<Discount> discountsList) {
         discountsList.forEach((discount) -> {
             System.out.println(discount.toString());
         });

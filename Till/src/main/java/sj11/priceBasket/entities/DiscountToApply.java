@@ -1,7 +1,9 @@
 package sj11.priceBasket.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,6 +42,26 @@ public class DiscountToApply implements Serializable {
 //
 //        return s1.equals(s2);
 //    }
+    public Set<Product> getProducts() {
+        Set<Product> productList = new HashSet();
+        if (productId1 != null) {
+            productList.add(productId1);
+        }
+        if (productId2 != null) {
+            productList.add(productId2);
+        }
+        if (productId3 != null) {
+            productList.add(productId3);
+        }
+        if (productId4 != null) {
+            productList.add(productId4);
+        }
+        if (productId5 != null) {
+            productList.add(productId5);
+        }
+        return productList;
+    }
+
     public Long getId() {
         return id;
     }
