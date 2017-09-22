@@ -26,16 +26,20 @@ public class DiscountApplier {
 
     private void applyDiscount(Ticket ticket, Discount discount) throws InvalidDiscountAppliedException {
         List<Product> productsToApply = discount.getDiscountToApply().getProducts();
-        if (ticket.getShoppingList().containsAll(productsToApply)) {
+        if (isList2ContainedInList1WithRepetitionsAndRemove(ticket.getShoppingList(), productsToApply)) {
             ticket.addDiscount(discount.getDiscountApplied());
-            removeFirstOccurence(ticket.getShoppingList(), productsToApply);
             applyDiscount(ticket, discount);
         }
     }
 
-    public void removeFirstOccurence(List<Product> shoppingList, List<Product> discountToApply) {
-        discountToApply.forEach((productToDelete) -> {
-            shoppingList.remove(productToDelete);
-        });
+    public boolean isList2ContainedInList1WithRepetitionsAndRemove(List<Product> list1, List<Product> list2) {
+        boolean result = true;
+        for(Product list2Item: list2) {
+            result = result && list1.contains(list2Item);
+            if (result) {
+                list1.remove(list2Item);
+            }
+        }
+        return result;
     }
 }
