@@ -27,6 +27,15 @@ public class ScannerTest {
         assertEquals(1f, output.getSubtotalInPounds(), 0.01f);
     }
 
+    @Test
+    public void scan_calculateSubtotalOf2SameProducts_2TimesThePrice() {
+        String[] shoppingItems = {"Apples", "Apples"};
+
+        Ticket output = scanner.scan(shoppingItems);
+
+        assertEquals(2f, output.getSubtotalInPounds(), 0.01f);
+    }
+
     @Test(expected = EmptyShoppingListException.class)
     public void scan_emptyShoppingList_throwsEmptyShoppingListException() {
         String[] shoppingItems = {};

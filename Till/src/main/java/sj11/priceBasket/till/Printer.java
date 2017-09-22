@@ -1,7 +1,7 @@
 package sj11.priceBasket.till;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import org.springframework.stereotype.Component;
 import sj11.priceBasket.entities.DiscountApplied;
 import sj11.priceBasket.entities.Product;
@@ -28,7 +28,7 @@ public class Printer {
         printPrice(ticket.getTotalInPounds());
     }
 
-    private void printDiscountsApplied(Set<DiscountApplied> discountsList) {
+    private void printDiscountsApplied(List<DiscountApplied> discountsList) {
         discountsList.forEach((discount) -> {
             printDiscountApplied(discount);
         });

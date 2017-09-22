@@ -18,7 +18,6 @@
 package sj11.priceBasket.till;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,12 +44,26 @@ public class DiscountApplierTest {
         Ticket ticket = new Ticket();
         Product p1 = new Product("Apples", 1f);
         DiscountApplied da1 = new DiscountApplied(p1, 10f, null, null, null, null, null, null, null, null);
-        ticket.setDiscountsApplied(new HashSet<>(Arrays.asList(da1)));
+        ticket.setDiscountsApplied(Arrays.asList(da1));
         ticket.setSubtotalInPounds(1f);
 
         discountApplier.applyDiscounts(ticket);
 
         assertTrue(compare(0.9f, ticket.getSubtotalInPounds() - 0.1f));
+    }
+
+    @Test
+    public void applyDiscounts_applyDiscount1Twice_totalIs20pLessThanSubtotal() throws InvalidDiscountAppliedException {
+        Ticket ticket = new Ticket();
+        Product p1 = new Product("Apples", 1f);
+        DiscountApplied da1 = new DiscountApplied(p1, 10f, null, null, null, null, null, null, null, null);
+        DiscountApplied da2 = new DiscountApplied(p1, 10f, null, null, null, null, null, null, null, null);
+        ticket.setDiscountsApplied(Arrays.asList(da1, da2));
+        ticket.setSubtotalInPounds(2f);
+
+        discountApplier.applyDiscounts(ticket);
+
+        assertTrue(compare(1.8f, ticket.getSubtotalInPounds() - 0.2f));
     }
 
     @Test
@@ -60,7 +73,22 @@ public class DiscountApplierTest {
         Product p2 = new Product("Soup", 0.65f);
         Product p3 = new Product("Bread", 0.8f);
         DiscountApplied da1 = new DiscountApplied(p1, 0f, p2, 0f, p3, 50f, null, null, null, null);
-        ticket.setDiscountsApplied(new HashSet<>(Arrays.asList(da1)));
+        ticket.setDiscountsApplied(Arrays.asList(da1));
+        ticket.setSubtotalInPounds(2.1f);
+
+        discountApplier.applyDiscounts(ticket);
+
+        assertTrue(compare(1.7f, ticket.getSubtotalInPounds() - 0.4f));
+    }
+
+    @Test
+    public void applyDiscounts_applyDiscount2DifferentOrder_totalIs40pLessThanSubtotalAnyway() throws InvalidDiscountAppliedException {
+        Ticket ticket = new Ticket();
+        Product p1 = new Product("Soup", 0.65f);
+        Product p2 = new Product("Soup", 0.65f);
+        Product p3 = new Product("Bread", 0.8f);
+        DiscountApplied da1 = new DiscountApplied(p1, 0f, p3, 50f, p2, 0f, null, null, null, null);
+        ticket.setDiscountsApplied(Arrays.asList(da1));
         ticket.setSubtotalInPounds(2.1f);
 
         discountApplier.applyDiscounts(ticket);

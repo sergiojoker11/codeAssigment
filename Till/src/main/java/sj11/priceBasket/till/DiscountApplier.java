@@ -1,5 +1,6 @@
 package sj11.priceBasket.till;
 
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,10 +25,17 @@ public class DiscountApplier {
     }
 
     private void applyDiscount(Ticket ticket, Discount discount) throws InvalidDiscountAppliedException {
-        Set<Product> productsToApply = discount.getDiscountToApply().getProducts();
+        List<Product> productsToApply = discount.getDiscountToApply().getProducts();
         if (ticket.getShoppingList().containsAll(productsToApply)) {
             ticket.addDiscount(discount.getDiscountApplied());
-            ticket.getShoppingList().removeAll(productsToApply);
+            removeFirstOccurence(ticket.getShoppingList(), productsToApply);
+            applyDiscount(ticket, discount);
         }
+    }
+
+    public void removeFirstOccurence(List<Product> shoppingList, List<Product> discountToApply) {
+        discountToApply.forEach((productToDelete) -> {
+            shoppingList.remove(productToDelete);
+        });
     }
 }

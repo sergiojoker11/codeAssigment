@@ -1,20 +1,20 @@
 package sj11.priceBasket.entities;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import sj11.priceBasket.exceptions.InvalidDiscountAppliedException;
 
 public class Ticket {
 
-    private Set<Product> shoppingList;
+    private List<Product> shoppingList;
     private float subtotalInPounds;
-    private Set<DiscountApplied> discountsApplied;
+    private List<DiscountApplied> discountsApplied;
     private float totalInPounds;
 
     public Ticket() {
-        shoppingList = new HashSet<>();
-        discountsApplied = new HashSet<>();
+        shoppingList = new ArrayList<>();
+        discountsApplied = new ArrayList<>();
     }
 
     public void calculateTotal() {
@@ -55,11 +55,11 @@ public class Ticket {
         }
     }
 
-    public Set<Product> getShoppingList() {
+    public List<Product> getShoppingList() {
         return shoppingList;
     }
 
-    public void setShoppingList(Set<Product> shoppingList) {
+    public void setShoppingList(List<Product> shoppingList) {
         this.shoppingList = shoppingList;
     }
 
@@ -71,11 +71,11 @@ public class Ticket {
         this.subtotalInPounds = subtotalInPounds;
     }
 
-    public Set<DiscountApplied> getDiscountsApplied() {
+    public List<DiscountApplied> getDiscountsApplied() {
         return discountsApplied;
     }
 
-    public void setDiscountsApplied(Set<DiscountApplied> discountsApplied) {
+    public void setDiscountsApplied(List<DiscountApplied> discountsApplied) {
         this.discountsApplied = discountsApplied;
     }
 

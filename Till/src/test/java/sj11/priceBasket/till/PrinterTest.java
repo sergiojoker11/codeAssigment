@@ -2,8 +2,7 @@ package sj11.priceBasket.till;
 
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -52,11 +51,11 @@ public class PrinterTest extends AbstractTestUtils {
         Product p2 = new Product("Milk", 1.3f);
         Product p3 = new Product("Bread", 0.8f);
         DiscountApplied discountApplied = new DiscountApplied(p1, 10f, null, null, null, null, null, null, null, null);
-        Set<Product> shoppingList = new HashSet<>(Arrays.asList(p1, p2, p3));
+        List<Product> shoppingList = Arrays.asList(p1, p2, p3);
         ticket.setSubtotalInPounds(3.1f);
         ticket.setTotalInPounds(3f);
         ticket.setShoppingList(shoppingList);
-        ticket.setDiscountsApplied(new HashSet<>(Arrays.asList(discountApplied)));
+        ticket.setDiscountsApplied(Arrays.asList(discountApplied));
 
         printer.print(ticket);
 
@@ -67,7 +66,7 @@ public class PrinterTest extends AbstractTestUtils {
     public void print_example2FromDocument_ticketPrintedNoDiscountsApplied() {
         Ticket ticket = new Ticket();
         Product p2 = new Product("Milk", 1.3f);
-        Set<Product> shoppingList = new HashSet<>(Arrays.asList(p2));
+        List<Product> shoppingList = Arrays.asList(p2);
         ticket.setSubtotalInPounds(1.3f);
         ticket.setTotalInPounds(1.3f);
         ticket.setShoppingList(shoppingList);
