@@ -1,5 +1,7 @@
 Java Standalone application + Spring 4.3.11 (Spring Data 1.11.7) + Hibernate 5.2.11 + HSQLDB 2.4.0 (in memory)
 
+The maven build created two JAR files. One has dependendecies and the other does not. To execute it from command line, use the one with dependencies.
+
 # codeAssigment
 2nd step of a selection process
 
