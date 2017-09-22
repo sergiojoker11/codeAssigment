@@ -13,7 +13,7 @@ public class DiscountApplier {
 
     @Autowired
     private DiscountService discountService;
-    Set<Discount> discountList;
+    private Set<Discount> discountList;
 
     public void applyDiscounts(Ticket ticket) {
         this.discountList = discountService.getAll();

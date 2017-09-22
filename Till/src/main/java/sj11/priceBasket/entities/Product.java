@@ -17,17 +17,13 @@ public class Product implements Serializable {
     private Long id;
     private String name;
     private float priceInPounds;
-    private boolean offerApplied;
-    private float priceRate;
 
     public Product() {
     }
 
-    public Product(String name, float priceInPounds, boolean offerApplied, float priceRate) {
+    public Product(String name, float priceInPounds) {
         this.name = name;
         this.priceInPounds = priceInPounds;
-        this.offerApplied = offerApplied;
-        this.priceRate = priceRate;
     }
 
     public Long getId() {
@@ -54,30 +50,12 @@ public class Product implements Serializable {
         this.priceInPounds = priceInPounds;
     }
 
-    public boolean isOfferApplied() {
-        return offerApplied;
-    }
-
-    public void setOfferApplied(boolean offerApplied) {
-        this.offerApplied = offerApplied;
-    }
-
-    public float getPriceRate() {
-        return priceRate;
-    }
-
-    public void setPriceRate(float priceRate) {
-        this.priceRate = priceRate;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Float.floatToIntBits(this.priceInPounds);
-        hash = 79 * hash + (this.offerApplied ? 1 : 0);
-        hash = 79 * hash + Float.floatToIntBits(this.priceRate);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.name);
+        hash = 83 * hash + Float.floatToIntBits(this.priceInPounds);
         return hash;
     }
 
@@ -96,12 +74,6 @@ public class Product implements Serializable {
         if (Float.floatToIntBits(this.priceInPounds) != Float.floatToIntBits(other.priceInPounds)) {
             return false;
         }
-        if (this.offerApplied != other.offerApplied) {
-            return false;
-        }
-        if (Float.floatToIntBits(this.priceRate) != Float.floatToIntBits(other.priceRate)) {
-            return false;
-        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -113,6 +85,6 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", name=" + name + ", priceInPounds=" + priceInPounds + ", offerApplied=" + offerApplied + ", priceRate=" + priceRate + '}';
+        return "Product{" + "id=" + id + ", name=" + name + ", priceInPounds=" + priceInPounds + '}';
     }
 }

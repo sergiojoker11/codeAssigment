@@ -48,9 +48,9 @@ public class PrinterTest extends AbstractTestUtils {
     @Test
     public void print_example1FromDocument_ticketPrinted() {
         Ticket ticket = new Ticket();
-        Product p1 = new Product("Apples", 1f, false, 100f);
-        Product p2 = new Product("Milk", 1.3f, false, 100f);
-        Product p3 = new Product("Bread", 0.8f, false, 100f);
+        Product p1 = new Product("Apples", 1f);
+        Product p2 = new Product("Milk", 1.3f);
+        Product p3 = new Product("Bread", 0.8f);
         DiscountApplied discountApplied = new DiscountApplied(p1, 10f, null, null, null, null, null, null, null, null);
         Set<Product> shoppingList = new HashSet<>(Arrays.asList(p1, p2, p3));
         ticket.setSubtotalInPounds(3.1f);
@@ -66,7 +66,7 @@ public class PrinterTest extends AbstractTestUtils {
     @Test
     public void print_example2FromDocument_ticketPrintedNoDiscountsApplied() {
         Ticket ticket = new Ticket();
-        Product p2 = new Product("Milk", 1.3f, false, 100f);
+        Product p2 = new Product("Milk", 1.3f);
         Set<Product> shoppingList = new HashSet<>(Arrays.asList(p2));
         ticket.setSubtotalInPounds(1.3f);
         ticket.setTotalInPounds(1.3f);
