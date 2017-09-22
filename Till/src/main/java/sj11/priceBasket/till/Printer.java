@@ -2,10 +2,12 @@ package sj11.priceBasket.till;
 
 import java.util.Locale;
 import java.util.Set;
+import org.springframework.stereotype.Component;
 import sj11.priceBasket.entities.DiscountApplied;
 import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
 
+@Component
 public class Printer {
 
     public void print(Ticket ticket) {

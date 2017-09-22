@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <Product id="1" name="Apples" priceInPounds="0.65" offerApplied="0" priceRate="100"/>
+<!--	<0>
+		<id>1</id>
+		<name>Soup</name>
+		<priceInPounds>0.65</priceInPounds>
+		<offerApplied>0</offerApplied>
+		<priceRate>100</priceRate>
+	</0>
+	<1>
+		<id>2</id>
+		<name>Bread</name>
+		<priceInPounds>0.8</priceInPounds>
+		<offerApplied>0</offerApplied>
+		<priceRate>100</priceRate>
+	</1>
+	<2>
+		<id>3</id>
+		<name>Milk</name>
+		<priceInPounds>1.3</priceInPounds>
+		<offerApplied>0</offerApplied>
+		<priceRate>100</priceRate>
+	</2>
+	<3>
+		<id>4</id>
+		<name>Apples</name>
+		<priceInPounds>1</priceInPounds>
+		<offerApplied>0</offerApplied>
+		<priceRate>100</priceRate>
+	</3>-->
+</dataset>

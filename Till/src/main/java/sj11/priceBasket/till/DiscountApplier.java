@@ -1,22 +1,22 @@
 package sj11.priceBasket.till;
 
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sj11.priceBasket.entities.Discount;
 import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
 import sj11.priceBasket.services.DiscountService;
 
+@Component
 public class DiscountApplier {
 
-    private final DiscountService discountService;
+    @Autowired
+    private DiscountService discountService;
     Set<Discount> discountList;
 
-    public DiscountApplier(DiscountService discountService) {
-        this.discountService = discountService;
-        this.discountList = discountService.getAll();
-    }
-
     public void applyDiscounts(Ticket ticket) {
+        this.discountList = discountService.getAll();
         discountList
                 .forEach((discount) -> {
                     applyDiscount(ticket, discount);
