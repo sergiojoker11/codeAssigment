@@ -46,8 +46,12 @@ public class Ticket {
         subtotalInPounds += productoPrice;
     }
 
-    public void addDiscount(DiscountApplied discount) {
-        discountsApplied.add(discount);
+    public void addDiscount(DiscountApplied discount) throws IllegalStateException {
+        if (discount.areAllExistingProductRatePositive()) {
+            discountsApplied.add(discount);
+        } else {
+            new IllegalStateException("The discountApplied" + discount.toString() + " has an invalid productRate");
+        }
     }
 
     public Set<Product> getShoppingList() {

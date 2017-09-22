@@ -15,16 +15,15 @@ public class DiscountApplier {
     private DiscountService discountService;
     private Set<Discount> discountList;
 
-    public void applyDiscounts(Ticket ticket) {
+    public void applyDiscounts(Ticket ticket) throws IllegalStateException {
         this.discountList = discountService.getAll();
-        discountList
-                .forEach((discount) -> {
-                    applyDiscount(ticket, discount);
-                });
+        for (Discount discount:discountList) {
+            applyDiscount(ticket, discount);
+        }
         ticket.calculateTotal();
     }
 
-    private void applyDiscount(Ticket ticket, Discount discount) {
+    private void applyDiscount(Ticket ticket, Discount discount) throws IllegalStateException {
         Set<Product> productsToApply = discount.getDiscountToApply().getProducts();
         if (ticket.getShoppingList().containsAll(productsToApply)) {
             ticket.addDiscount(discount.getDiscountApplied());

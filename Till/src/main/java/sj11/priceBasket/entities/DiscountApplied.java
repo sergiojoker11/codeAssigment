@@ -54,6 +54,26 @@ public class DiscountApplied implements Serializable {
         this.productRate5 = productRate5;
     }
 
+    public boolean areAllExistingProductRatePositive() {
+        boolean result = true;
+        if (productRate1 != null) {
+            result = result && !(productRate1<0);
+        }
+        if (productRate2 != null) {
+            result = result && !(productRate2<0);
+        }
+        if (productRate3 != null) {
+            result = result && !(productRate3<0);
+        }
+        if (productRate4 != null) {
+            result = result && !(productRate4<0);
+        }
+        if (productRate5 != null) {
+            result = result && !(productRate5<0);
+        }
+        return result;
+    }
+
     public Long getId() {
         return id;
     }

@@ -27,6 +27,9 @@ public class Till {
         } catch (NoSuchElementException notFoundEx) {
             System.out.println("One of the scanned products is not from this shop");
             logger.info(notFoundEx.getLocalizedMessage());
+        } catch (IllegalStateException illegalStateEx) {
+            System.out.println("Staff required");
+            logger.info(illegalStateEx.getLocalizedMessage());
         } catch (EmptyShoppingListException emptyShoppingListEx) {
             System.out.println("Good bye!");
             logger.info(emptyShoppingListEx.getLocalizedMessage());

@@ -78,6 +78,17 @@ public class DiscountApplierTest {
         assertTrue(compare(1f, ticket.getTotalInPounds()));
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void applyDiscounts_invalidDisount_throwIllegalStateException() {
+        Ticket ticket = new Ticket();
+        Product p1 = new Product("InvalidDiscount", 1f);
+        DiscountApplied da1 = new DiscountApplied(p1, -10f, null, null, null, null, null, null, null, null);
+        ticket.setDiscountsApplied(new HashSet<>(Arrays.asList(da1)));
+        ticket.setSubtotalInPounds(1f);
+
+        discountApplier.applyDiscounts(ticket);
+    }
+
     private boolean compare(float factor1, float factor2) {
         return Math.abs(factor1 - factor2) < this.epsilon;
     }
