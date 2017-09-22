@@ -38,6 +38,22 @@ public class DiscountApplied implements Serializable {
     private Product productId5;
     private Float productRate5;
 
+    public DiscountApplied() {
+    }
+
+    public DiscountApplied(Product productId1, Float productRate1, Product productId2, Float productRate2, Product productId3, Float productRate3, Product productId4, Float productRate4, Product productId5, Float productRate5) {
+        this.productId1 = productId1;
+        this.productRate1 = productRate1;
+        this.productId2 = productId2;
+        this.productRate2 = productRate2;
+        this.productId3 = productId3;
+        this.productRate3 = productRate3;
+        this.productId4 = productId4;
+        this.productRate4 = productRate4;
+        this.productId5 = productId5;
+        this.productRate5 = productRate5;
+    }
+
     public Long getId() {
         return id;
     }

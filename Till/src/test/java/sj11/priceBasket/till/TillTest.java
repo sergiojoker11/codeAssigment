@@ -17,7 +17,6 @@
  */
 package sj11.priceBasket.till;
 
-import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -31,9 +30,8 @@ import sj11.priceBasket.config.PersistenceAndBeansConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceAndBeansConfiguration.class})
-public class TillTest {
+public class TillTest extends AbstractTestUtils {
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     @Autowired
     private Till till;
 
@@ -56,7 +54,7 @@ public class TillTest {
 
         till.charge(shoppingItems);
 
-        assertEquals(createExpectation("£3.10", "£3.00", "10%", "10p"), outContent.toString());
+        assertEquals(createExpectation("£3.10", "£3.00", "Apples", "10%", "10p"), outContent.toString());
     }
 
     @Test
@@ -74,30 +72,27 @@ public class TillTest {
 
         till.charge(shoppingItems);
 
-        assertEquals(createExpectation("£2.10", "£1.70"), outContent.toString());
+        assertEquals(createExpectation("£2.10", "£1.70", "Bread","50%", "40p"), outContent.toString());
     }
 
-    private String createExpectation(String subtotal, String total, String... rateOffAndDiscountedPairs) {
-        StringBuilder expectation = new StringBuilder();
-        expectation.append("Subtotal: ").append(subtotal);
-        expectation.append(System.lineSeparator());
-        if (rateOffAndDiscountedPairs.length == 0) {
-            expectation.append("(No offers available)");
-            expectation.append(System.lineSeparator());
-        } else {
-            int index = 0;
-            for (String item : rateOffAndDiscountedPairs) {
-                if (index % 2 == 0) {
-                    expectation.append("Apples ").append(item);
-                } else {
-                    expectation.append(" off: -").append(item).append("");
-                    expectation.append(System.lineSeparator());
-                }
-                index++;
-            }
-        }
-        expectation.append("Total price: ").append(total);
-        return expectation.append(System.lineSeparator()).toString();
+    @Test
+    public void charge_emptyShoppingList_goodBye() {
+        String[] shoppingItems = {};
+
+        till.charge(shoppingItems);
+
+        assertEquals("Good bye!\n", outContent.toString());
     }
+
+    @Test
+    public void charge_invalidProduct_informativeMessage() {
+        String[] shoppingItems = {"invalidProduct"};
+
+        till.charge(shoppingItems);
+
+        assertEquals("One of the scanned products is not from this shop\n", outContent.toString());
+    }
+
+
 
 }

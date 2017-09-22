@@ -24,12 +24,13 @@ public class Discount implements Serializable {
     @PrimaryKeyJoinColumn
     private DiscountApplied discountApplied;
 
-//    public Discount() {
-//    }
-//    public Discount(DiscountToApply discountToApply, DiscountApplied discountApplied) {
-//        this.discountToApply = discountToApply;
-//        this.discountApplied = discountApplied;
-//    }
+    public Discount() {
+    }
+    
+    public Discount(DiscountToApply discountToApply, DiscountApplied discountApplied) {
+        this.discountToApply = discountToApply;
+        this.discountApplied = discountApplied;
+    }
     public Long getId() {
         return id;
     }

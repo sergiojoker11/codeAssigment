@@ -1,19 +1,31 @@
 package sj11.priceBasket.till;
 
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import sj11.priceBasket.config.PersistenceAndBeansConfiguration;
+import sj11.priceBasket.entities.DiscountApplied;
+import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
+import sj11.priceBasket.exceptions.EmptyShoppingListException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceAndBeansConfiguration.class})
-public class PrinterTest {
+public class PrinterTest extends AbstractTestUtils {
+
+    @Autowired
+    private Printer printer;
 
     @BeforeClass
     public static void setUpClass() {
@@ -25,16 +37,51 @@ public class PrinterTest {
 
     @Before
     public void setUp() {
+        System.setOut(new PrintStream(outContent));
     }
 
     @After
     public void tearDown() {
+        System.setOut(null);
     }
 
     @Test
-    public void testPrint() {
+    public void print_example1FromDocument_ticketPrinted() {
         Ticket ticket = new Ticket();
-        Printer instance = new Printer();
+        Product p1 = new Product("Apples", 1f, false, 100f);
+        Product p2 = new Product("Milk", 1.3f, false, 100f);
+        Product p3 = new Product("Bread", 0.8f, false, 100f);
+        DiscountApplied discountApplied = new DiscountApplied(p1, 10f, null, null, null, null, null, null, null, null);
+        Set<Product> shoppingList = new HashSet<>(Arrays.asList(p1, p2, p3));
+        ticket.setSubtotalInPounds(3.1f);
+        ticket.setTotalInPounds(3f);
+        ticket.setShoppingList(shoppingList);
+        ticket.setDiscountsApplied(new HashSet<>(Arrays.asList(discountApplied)));
+
+        printer.print(ticket);
+
+        assertEquals(createExpectation("£3.10", "£3.00", "Apples", "10%", "10p"), outContent.toString());
+    }
+
+    @Test
+    public void print_example2FromDocument_ticketPrintedNoDiscountsApplied() {
+        Ticket ticket = new Ticket();
+        Product p2 = new Product("Milk", 1.3f, false, 100f);
+        Set<Product> shoppingList = new HashSet<>(Arrays.asList(p2));
+        ticket.setSubtotalInPounds(1.3f);
+        ticket.setTotalInPounds(1.3f);
+        ticket.setShoppingList(shoppingList);
+
+        printer.print(ticket);
+
+        assertEquals(createExpectation("£1.30", "£1.30"), outContent.toString());
+    }
+
+    @Test(expected = EmptyShoppingListException.class)
+    public void print_emptyTicket_throwsEmptyShoppingListException() {
+        Ticket ticket = new Ticket();
+
+        printer.print(ticket);
     }
 
 }

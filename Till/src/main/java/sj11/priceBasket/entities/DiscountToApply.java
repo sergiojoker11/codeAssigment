@@ -35,13 +35,17 @@ public class DiscountToApply implements Serializable {
     @JoinColumn(name = "productId5")
     private Product productId5;
 
-    //    return listEqualsNoOrder(this.productsToApplyDiscount, other.productsToApplyDiscount);
-//    public static <T> boolean listEqualsNoOrder(List<T> l1, List<T> l2) {
-//        final Set<T> s1 = new HashSet<>(l1);
-//        final Set<T> s2 = new HashSet<>(l2);
-//
-//        return s1.equals(s2);
-//    }
+    public DiscountToApply() {
+    }
+
+    public DiscountToApply(Product productId1, Product productId2, Product productId3, Product productId4, Product productId5) {
+        this.productId1 = productId1;
+        this.productId2 = productId2;
+        this.productId3 = productId3;
+        this.productId4 = productId4;
+        this.productId5 = productId5;
+    }
+
     public Set<Product> getProducts() {
         Set<Product> productList = new HashSet();
         if (productId1 != null) {
