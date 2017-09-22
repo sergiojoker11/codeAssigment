@@ -11,7 +11,7 @@ import sj11.priceBasket.exceptions.EmptyShoppingListException;
 @Component
 public class Printer {
 
-    private final float epsilon = 0.0000001f;
+    private final float epsilon = 0.001f;
 
     public void print(Ticket ticket) {
         if (isZero(ticket.getSubtotalInPounds())) {

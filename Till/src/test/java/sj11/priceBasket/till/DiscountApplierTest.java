@@ -37,7 +37,7 @@ public class DiscountApplierTest {
     @Autowired
     private DiscountApplier discountApplier;
 
-    private final float epsilon = 0.0000001f;
+    private final float epsilon = 0.001f;
 
     @Test
     public void applyDiscounts_applyDiscount1_totalIs10pLessThanSubtotal() {
@@ -51,6 +51,33 @@ public class DiscountApplierTest {
 
         assertTrue(compare(0.9f, ticket.getSubtotalInPounds() - 0.1f));
     }
+
+    @Test
+    public void applyDiscounts_applyDiscount2_totalIs40pLessThanSubtotal() {
+        Ticket ticket = new Ticket();
+        Product p1 = new Product("Soup", 0.65f);
+        Product p2 = new Product("Soup", 0.65f);
+        Product p3 = new Product("Bread", 0.8f);
+        DiscountApplied da1 = new DiscountApplied(p1, 0f, p2, 0f, p3, 50f, null, null, null, null);
+        ticket.setDiscountsApplied(new HashSet<>(Arrays.asList(da1)));
+        ticket.setSubtotalInPounds(2.1f);
+
+        discountApplier.applyDiscounts(ticket);
+
+        assertTrue(compare(1.7f, ticket.getSubtotalInPounds() - 0.4f));
+    }
+
+    @Test
+    public void applyDiscounts_noDiscountsApplied_totalIsSubtotal() {
+        Ticket ticket = new Ticket();
+        ticket.setSubtotalInPounds(1f);
+
+        discountApplier.applyDiscounts(ticket);
+
+        assertTrue(compare(ticket.getTotalInPounds(), ticket.getSubtotalInPounds()));
+        assertTrue(compare(1f, ticket.getTotalInPounds()));
+    }
+
     private boolean compare(float factor1, float factor2) {
         return Math.abs(factor1 - factor2) < this.epsilon;
     }
