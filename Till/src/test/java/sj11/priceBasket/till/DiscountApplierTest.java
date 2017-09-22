@@ -19,11 +19,7 @@ package sj11.priceBasket.till;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,22 +38,6 @@ public class DiscountApplierTest {
     private DiscountApplier discountApplier;
 
     private final float epsilon = 0.0000001f;
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void applyDiscounts_applyDiscount1_totalIs10pLessThanSubtotal() {
