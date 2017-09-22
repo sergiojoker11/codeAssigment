@@ -3,6 +3,7 @@ package sj11.priceBasket.entities;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import sj11.priceBasket.exceptions.InvalidDiscountAppliedException;
 
 public class Ticket {
 
@@ -46,11 +47,11 @@ public class Ticket {
         subtotalInPounds += productoPrice;
     }
 
-    public void addDiscount(DiscountApplied discount) throws IllegalStateException {
+    public void addDiscount(DiscountApplied discount) throws InvalidDiscountAppliedException {
         if (discount.areAllExistingProductRatePositive()) {
             discountsApplied.add(discount);
         } else {
-            new IllegalStateException("The discountApplied" + discount.toString() + " has an invalid productRate");
+            throw new InvalidDiscountAppliedException("The discountApplied " + discount.toString() + " has an invalid productRate");
         }
     }
 

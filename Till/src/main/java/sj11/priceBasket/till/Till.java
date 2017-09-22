@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sj11.priceBasket.entities.Ticket;
 import sj11.priceBasket.exceptions.EmptyShoppingListException;
+import sj11.priceBasket.exceptions.InvalidDiscountAppliedException;
 
 @Component
 public class Till {
@@ -27,7 +28,7 @@ public class Till {
         } catch (NoSuchElementException notFoundEx) {
             System.out.println("One of the scanned products is not from this shop");
             logger.info(notFoundEx.getLocalizedMessage());
-        } catch (IllegalStateException illegalStateEx) {
+        } catch (InvalidDiscountAppliedException illegalStateEx) {
             System.out.println("Staff required");
             logger.info(illegalStateEx.getLocalizedMessage());
         } catch (EmptyShoppingListException emptyShoppingListEx) {

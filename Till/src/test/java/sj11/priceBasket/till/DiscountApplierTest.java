@@ -29,6 +29,7 @@ import sj11.priceBasket.config.PersistenceAndBeansConfiguration;
 import sj11.priceBasket.entities.DiscountApplied;
 import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
+import sj11.priceBasket.exceptions.InvalidDiscountAppliedException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceAndBeansConfiguration.class})
@@ -40,7 +41,7 @@ public class DiscountApplierTest {
     private final float epsilon = 0.001f;
 
     @Test
-    public void applyDiscounts_applyDiscount1_totalIs10pLessThanSubtotal() {
+    public void applyDiscounts_applyDiscount1_totalIs10pLessThanSubtotal() throws InvalidDiscountAppliedException {
         Ticket ticket = new Ticket();
         Product p1 = new Product("Apples", 1f);
         DiscountApplied da1 = new DiscountApplied(p1, 10f, null, null, null, null, null, null, null, null);
@@ -53,7 +54,7 @@ public class DiscountApplierTest {
     }
 
     @Test
-    public void applyDiscounts_applyDiscount2_totalIs40pLessThanSubtotal() {
+    public void applyDiscounts_applyDiscount2_totalIs40pLessThanSubtotal() throws InvalidDiscountAppliedException {
         Ticket ticket = new Ticket();
         Product p1 = new Product("Soup", 0.65f);
         Product p2 = new Product("Soup", 0.65f);
@@ -68,7 +69,7 @@ public class DiscountApplierTest {
     }
 
     @Test
-    public void applyDiscounts_noDiscountsApplied_totalIsSubtotal() {
+    public void applyDiscounts_noDiscountsApplied_totalIsSubtotal() throws InvalidDiscountAppliedException {
         Ticket ticket = new Ticket();
         ticket.setSubtotalInPounds(1f);
 
@@ -76,17 +77,6 @@ public class DiscountApplierTest {
 
         assertTrue(compare(ticket.getTotalInPounds(), ticket.getSubtotalInPounds()));
         assertTrue(compare(1f, ticket.getTotalInPounds()));
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void applyDiscounts_invalidDisount_throwIllegalStateException() {
-        Ticket ticket = new Ticket();
-        Product p1 = new Product("InvalidDiscount", 1f);
-        DiscountApplied da1 = new DiscountApplied(p1, -10f, null, null, null, null, null, null, null, null);
-        ticket.setDiscountsApplied(new HashSet<>(Arrays.asList(da1)));
-        ticket.setSubtotalInPounds(1f);
-
-        discountApplier.applyDiscounts(ticket);
     }
 
     private boolean compare(float factor1, float factor2) {

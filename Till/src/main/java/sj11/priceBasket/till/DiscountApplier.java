@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import sj11.priceBasket.entities.Discount;
 import sj11.priceBasket.entities.Product;
 import sj11.priceBasket.entities.Ticket;
+import sj11.priceBasket.exceptions.InvalidDiscountAppliedException;
 import sj11.priceBasket.services.DiscountService;
 
 @Component
@@ -13,17 +14,16 @@ public class DiscountApplier {
 
     @Autowired
     private DiscountService discountService;
-    private Set<Discount> discountList;
 
-    public void applyDiscounts(Ticket ticket) throws IllegalStateException {
-        this.discountList = discountService.getAll();
+    public void applyDiscounts(Ticket ticket) throws InvalidDiscountAppliedException {
+        Set<Discount> discountList = discountService.getAll();
         for (Discount discount:discountList) {
             applyDiscount(ticket, discount);
         }
         ticket.calculateTotal();
     }
 
-    private void applyDiscount(Ticket ticket, Discount discount) throws IllegalStateException {
+    private void applyDiscount(Ticket ticket, Discount discount) throws InvalidDiscountAppliedException {
         Set<Product> productsToApply = discount.getDiscountToApply().getProducts();
         if (ticket.getShoppingList().containsAll(productsToApply)) {
             ticket.addDiscount(discount.getDiscountApplied());
