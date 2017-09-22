@@ -76,6 +76,15 @@ public class TillTest extends AbstractTestUtils {
     }
 
     @Test
+    public void charge_apply2ndOfferDifferentOrder_50percentOffInBreadAnyway() {
+        String[] shoppingItems = {"Soup", "Bread", "Soup"};
+
+        till.charge(shoppingItems);
+
+        assertEquals(createExpectation("£2.10", "£1.70", "Bread","50%", "40p"), outContent.toString());
+    }
+
+    @Test
     public void charge_emptyShoppingList_goodBye() {
         String[] shoppingItems = {};
 
