@@ -31,7 +31,6 @@ public class PersistenceAndBeansConfiguration {
 
     @Bean
     public PlatformTransactionManager transactionManager() {
-
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;
@@ -44,7 +43,6 @@ public class PersistenceAndBeansConfiguration {
 
     @Bean
     public EntityManagerFactory entityManagerFactory() {
-
         // will set the provider to 'org.hibernate.ejb.HibernatePersistence'
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         // will set hibernate.show_sql to 'true'

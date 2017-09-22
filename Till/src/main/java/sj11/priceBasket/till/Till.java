@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sj11.priceBasket.entities.Ticket;
+import sj11.priceBasket.exceptions.EmptyShoppingListException;
 
 @Component
 public class Till {
@@ -26,6 +27,9 @@ public class Till {
         } catch (NoSuchElementException notFoundEx) {
             System.out.println("One of the scanned products is not from this shop");
             logger.info(notFoundEx.getLocalizedMessage());
+        } catch (EmptyShoppingListException emptyShoppingListEx) {
+            System.out.println("Good bye!");
+            logger.info(emptyShoppingListEx.getLocalizedMessage());
         }
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <Product id="1" name="Apples" priceInPounds="0.65" offerApplied="0" priceRate="100"/>
+    <Product id="1" name="Apples" priceInPounds="0.65" offerApplied="0" priceRate="100" />
 <!--	<0>
 		<id>1</id>
 		<name>Soup</name>

@@ -11,7 +11,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Product validate(String productName) {
+    public Product findByName(String productName) {
         return productRepository.findByName(productName);
     }
 }
