@@ -12,10 +12,6 @@ public class DiscountService {
     @Autowired
     private DiscountRepository discountRepository;
 
-    public Discount save(Discount discount) {
-        return discountRepository.save(discount);
-    }
-
     public Set<Discount> getAll() {
         return discountRepository.findAll();
     }

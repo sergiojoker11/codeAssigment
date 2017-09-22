@@ -7,6 +7,4 @@ import sj11.priceBasket.entities.Discount;
 public interface DiscountRepository extends Repository<Discount, Long> {
 
     Set<Discount> findAll();
-
-    Discount save(Discount discount);
 }
