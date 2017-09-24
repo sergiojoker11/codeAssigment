@@ -4,7 +4,7 @@ The maven build created two JAR files. One has dependendecies and the other does
 
 Unix command to execute the program:
 
-java -jar PriceBasket-1.0-SNAPSHOT-jar-with-dependencies.jar [Product names split by spaces]
+`java -jar PriceBasket-1.0-SNAPSHOT-jar-with-dependencies.jar` [Product names split by spaces]
 
 # codeAssigment
 2nd step of a selection process
